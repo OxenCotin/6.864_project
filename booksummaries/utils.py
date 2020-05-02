@@ -49,13 +49,28 @@ def format_genres(s):
 
     return genres
 
-def get_train_and_test():
+def filter_genres(df, genres):
+    """
+
+    :param df: Dataframe to filter
+    :param genres: list of strings, genres to filter
+    :return: df with filtered genres
+    """
+    # TODO
+    pass
+
+def get_train_and_test_data():
     data = load_data()
     data = format_data(data)
 
     train, test = sklearn.model_selection.train_test_split(data, test_size=.2)
 
-    return train, test
+    # TODO: Filter genres and One Hot,
+
+    x_train, y_train, x_test, y_test = train[:, 1], train[:, 0], test[:, 1], test[:0]
+    
+    return x_train, y_train, x_test, y_test
+
 
 data = load_data()
 data = format_data(data)
