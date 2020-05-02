@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+import sklearn.model_selection
+import re
 import torch
 import math 
 import sys
@@ -15,5 +17,51 @@ def load_data():
     print("loaded")
     return book_summary_data
 
+
+def format_data(df):
+    """
+
+    Remove all other columns other than genres and summary. Get genres from string
+    of dictionary to list of genres
+
+    :param df: Dataframe to format
+    :return: df trimmed and formatted
+    """
+
+    # Cols taken currently, only genres and summaries
+
+
+    df["genres"] = df["genres"].apply(format_genres)
+    df = df[["genres", "summary"]]
+
+    # Scramble
+    return df
+
+def format_genres(s):
+    """
+
+    :param s: string rep of genres from original source
+    :return: list of strings: list of strings of genres
+    """
+
+    regex = '(?<=: \").+?(?=\")'
+    genres = re.findall(regex, s)
+
+    return genres
+
+def get_train_and_test():
+    data = load_data()
+    data = format_data(data)
+
+    train, test = sklearn.model_selection.train_test_split(data, test_size=.2)
+
+    return train, test
+
 data = load_data()
-data = data.loc[data["genres"].notna()]
+data = format_data(data)
+counts = data['genres'].explode().value_counts()
+
+# data_n = data.to_numpy()
+# unique_elts, count_elts = np.unique(data_n[:, 0], return_counts=True)
+
+
