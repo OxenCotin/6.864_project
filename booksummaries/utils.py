@@ -17,4 +17,3 @@ def load_data():
 
 data = load_data()
 data = data.loc[data["genres"].notna()]
-
