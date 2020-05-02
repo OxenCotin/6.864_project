@@ -30,12 +30,12 @@ def format_data(df):
 
     # Cols taken currently, only genres and summaries
 
-
     df["genres"] = df["genres"].apply(format_genres)
     df = df[["genres", "summary"]]
 
     # Scramble
     return df
+
 
 def format_genres(s):
     """
@@ -49,6 +49,7 @@ def format_genres(s):
 
     return genres
 
+
 def filter_genres(df, genres):
     """
 
@@ -59,6 +60,7 @@ def filter_genres(df, genres):
     # TODO
     pass
 
+
 def get_train_and_test_data():
     data = load_data()
     data = format_data(data)
@@ -68,7 +70,7 @@ def get_train_and_test_data():
     # TODO: Filter genres and One Hot,
 
     x_train, y_train, x_test, y_test = train[:, 1], train[:, 0], test[:, 1], test[:0]
-    
+
     return x_train, y_train, x_test, y_test
 
 
