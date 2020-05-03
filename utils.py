@@ -91,7 +91,7 @@ def get_train_and_test_data():
 
     counts = data['genres'].explode().value_counts().to_dict()
 
-    remove_genres = {key:val for key, val in counts.items() if val < 87}
+    remove_genres = {key:val for key, val in counts.items() if val < 600}
     data = filter_genres(data, remove_genres.keys())
 
 
@@ -115,12 +115,6 @@ def get_train_and_test_data():
 
     x_train, y_train, x_test, y_test = sklearn.model_selection.train_test_split(data["summary"], data["genres"], test_size=.2)
     return x_train, y_train, x_test, y_test
-
-
-data = load_data()
-data = format_data(data)
-
-x_train, y_train, x_test, y_test = get_train_and_test_data()
 
 
 # data_n = data.to_numpy()
