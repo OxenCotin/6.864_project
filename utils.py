@@ -5,6 +5,7 @@ import re
 import torch
 import math 
 import sys
+from sklearn.preprocessing import MultiLabelBinarizer
 
 BOOK_SUMMARY_FILE = "clean_summaries.csv"
 
@@ -87,7 +88,26 @@ def get_train_and_test_data():
 
     train, test = sklearn.model_selection.train_test_split(data, test_size=.2)
 
-    # TODO: Filter genres and One Hot,
+
+    counts = data['genres'].explode().value_counts().to_dict()
+
+    remove_genres = {key:val for key, val in counts.items() if val < 87}
+    data = filter_genres(data, remove_genres.keys())
+
+
+    replacement_dict = {'Science fiction': ['Speculative fiction', 'Hard science fiction'],
+                    'Mystery': ['Detective fiction', 'Crime fiction'],
+                    'Historical novel': ['Historical fiction', 'History']}
+
+
+    for k in replacement_dict:
+        for v in replacement_dict[k]:
+            replace_genre(data, 'genres', v, k)
+    
+    mlb = MultiLabelBinarizer()
+    data = data.join(pd.DataFrame(mlb.fit_transform(data.pop('genres')),
+                              columns=mlb.classes_,
+                              index=data.index))
 
     x_train, y_train, x_test, y_test = train[:, 1], train[:, 0], test[:, 1], test[:0]
 
@@ -96,20 +116,6 @@ def get_train_and_test_data():
 
 data = load_data()
 data = format_data(data)
-counts = data['genres'].explode().value_counts().to_dict()
-
-remove_genres = {key:val for key, val in counts.items() if val < 87}
-data = filter_genres(data, remove_genres.keys())
-
-
-replacement_dict = {'Science fiction': ['Speculative fiction', 'Hard science fiction'],
-                    'Mystery': ['Detective fiction', 'Crime fiction'],
-                    'Historical novel': ['Historical fiction', 'History']}
-
-
-data = [[replace_genre(data, 'genres', v, k) for v in replacement_dict[k]] for k in replacement_dict]
-
-print(data)
 
 # data_n = data.to_numpy()
 # unique_elts, count_elts = np.unique(data_n[:, 0], return_counts=True)
