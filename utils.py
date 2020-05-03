@@ -110,13 +110,17 @@ def get_train_and_test_data():
                               index=data.index))
 
 
-    x_train, y_train, x_test, y_test = sklearn.model_selection.train_test_split(data["summary"], data["genres"], test_size=.2)
+    data['genres'] = data[data.columns[1:]].apply(
+        lambda x: ','.join(x.dropna().astype(str)),axis=1)
 
+    x_train, y_train, x_test, y_test = sklearn.model_selection.train_test_split(data["summary"], data["genres"], test_size=.2)
     return x_train, y_train, x_test, y_test
 
 
 data = load_data()
 data = format_data(data)
+
+x_train, y_train, x_test, y_test = get_train_and_test_data()
 
 
 # data_n = data.to_numpy()
