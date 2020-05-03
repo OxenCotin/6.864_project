@@ -25,13 +25,16 @@ NUM_EPOCHS = 10
 data = utils.load_data()
 data = utils.format_data(data)
 
-genres, summaries = data[:, 1], data[:, 0]
+genres, summaries = data["genres"], data["summary"]
 
 # Pre-process Data
 tokenizer = Tokenizer(num_words=VOCAB_SIZE, oov_token=OOV_TOKEN)
 tokenizer.fit_on_texts(summaries)
 word_index = tokenizer.word_index
-print(word_index[:10])
+print(word_index)
+#
+# import pdb
+# pdb.set_trace()
 
 # Tokenize to sequences and pad to have same length
 text_sequences = tokenizer.texts_to_sequences(summaries)
@@ -42,7 +45,8 @@ binarizer = MultiLabelBinarizer()
 binarizer.fit(genres)
 y = binarizer.classes_
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=.2, random_state=RANDOM_SEED)
+x_train, x_test, y_train, y_test = utils.get_train_and_test_data()
+
 
 # Actual LSTM Architecture
 
@@ -87,7 +91,11 @@ def create_lstm():
 
     return model
 
+print("Creating Model")
+
 baseline_model = create_baseline()
+print("Model created")
+
 callbacks = [
     EarlyStopping(patience=4),
     ModelCheckpoint(filepath='baseline-nn.h5', save_best_only=True)
