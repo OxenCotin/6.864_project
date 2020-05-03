@@ -5,6 +5,7 @@ from keras import Sequential
 from keras.layers import Embedding, LSTM, Dense, Dropout
 from keras.preprocessing.sequence import pad_sequences
 from keras.optimizers import Adam
+from keras.callbacks import EarlyStopping, ModelCheckpoint
 
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.model_selection import train_test_split
@@ -70,9 +71,32 @@ def create_baseline():
 
     model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy'])
 
+    return model
 
 def create_lstm():
     # TODO
-    pass
+    model = Sequential()
+    model.add(Embedding(VOCAB_SIZE, 20, input_dim=MAX_TEXT_LEN))
+    model.add(Dropout(rate=.15))
+    model.add(LSTM(100, dropout=.2, recurrent_dropout=.2))
+    model.add(Dense(NUM_GENRES, activation='sigmoid'))
 
+    optimizer = Adam(lr=INIT_LR, decay=INIT_LR / NUM_EPOCHS)
 
+    model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy'])
+
+    return model
+
+baseline_model = create_baseline()
+callbacks = [
+    EarlyStopping(patience=4),
+    ModelCheckpoint(filepath='baseline-nn.h5', save_best_only=True)
+]
+
+history = baseline_model.fit(x_train, y_train,
+                             epochs=NUM_EPOCHS,
+                             batch_size=32,
+                             validation_split=.1,
+                             callbacks=callbacks
+
+)
