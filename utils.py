@@ -96,19 +96,21 @@ def get_train_and_test_data():
 
 data = load_data()
 data = format_data(data)
-#counts = data['genres'].explode().value_counts()
+counts = data['genres'].explode().value_counts().to_dict()
 
-sciencey = ['Speculative fiction', 'Hard science fiction']
-for r in sciencey:
-    data = replace_genre(data, 'genres', r, 'Science fiction')
+remove_genres = {key:val for key, val in counts.items() if val < 87}
+data = filter_genres(data, remove_genres.keys())
 
-detective = ['Crime fiction', 'Detective fiction']
 
-for r in detective: 
-    data = replace_genre(data, 'genres', r, 'Mystery')
+replacement_dict = {'Science fiction': ['Speculative fiction', 'Hard science fiction'],
+                    'Mystery': ['Detective fiction', 'Crime fiction'],
+                    'Historical novel': ['Historical fiction', 'History']}
 
-data = filter_genres(data, ['Gothic fiction', 'Tragicomedy', 'Novella', 'Hardboiled', 'Religious text' ])
+
+data = [[replace_genre(data, 'genres', v, k) for v in replacement_dict[k]] for k in replacement_dict]
+
 print(data)
+
 # data_n = data.to_numpy()
 # unique_elts, count_elts = np.unique(data_n[:, 0], return_counts=True)
 
