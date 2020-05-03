@@ -98,7 +98,16 @@ data = load_data()
 data = format_data(data)
 #counts = data['genres'].explode().value_counts()
 
-data = replace_genre(data,'genres','Spy fiction','Fiction')
+sciencey = ['Speculative fiction', 'Hard science fiction']
+for r in sciencey:
+    data = replace_genre(data, 'genres', r, 'Science fiction')
+
+detective = ['Crime fiction', 'Detective fiction']
+
+for r in detective: 
+    data = replace_genre(data, 'genres', r, 'Mystery')
+
+data = filter_genres(data, ['Gothic fiction', 'Tragicomedy', 'Novella', 'Hardboiled', 'Religious text' ])
 print(data)
 # data_n = data.to_numpy()
 # unique_elts, count_elts = np.unique(data_n[:, 0], return_counts=True)
