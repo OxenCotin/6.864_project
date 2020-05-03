@@ -58,7 +58,27 @@ def filter_genres(df, genres):
     :return: df with filtered genres
     """
     # TODO
-    pass
+
+    
+    for g in genres:
+        df = df[~df['genres'].apply(lambda x: g in x)] 
+
+    return df
+
+
+def replace_genre(df, col, key, val):
+    """
+    :param df: Dataframe to filter
+    :param col: column to filter by
+    :param key: string to replace
+    :param val: string to use instead
+
+    """
+
+    m = [key in v for v in df[col]]
+    df.loc[m, col] = val
+
+    return df
 
 
 def get_train_and_test_data():
@@ -76,8 +96,19 @@ def get_train_and_test_data():
 
 data = load_data()
 data = format_data(data)
-counts = data['genres'].explode().value_counts()
+#counts = data['genres'].explode().value_counts()
 
+sciencey = ['Speculative fiction', 'Hard science fiction']
+for r in sciencey:
+    data = replace_genre(data, 'genres', r, 'Science fiction')
+
+detective = ['Crime fiction', 'Detective fiction']
+
+for r in detective: 
+    data = replace_genre(data, 'genres', r, 'Mystery')
+
+data = filter_genres(data, ['Gothic fiction', 'Tragicomedy', 'Novella', 'Hardboiled', 'Religious text' ])
+print(data)
 # data_n = data.to_numpy()
 # unique_elts, count_elts = np.unique(data_n[:, 0], return_counts=True)
 
