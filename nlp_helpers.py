@@ -33,5 +33,3 @@ def clean_summary(text):
     return text
 
 
-def tokenize():
-
