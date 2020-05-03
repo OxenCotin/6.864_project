@@ -117,7 +117,6 @@ def get_train_and_test_data():
 data = load_data()
 data = format_data(data)
 
+
 # data_n = data.to_numpy()
 # unique_elts, count_elts = np.unique(data_n[:, 0], return_counts=True)
-
-
