@@ -2,7 +2,7 @@ import numpy as np
 import utils
 from keras.preprocessing.text import Tokenizer
 from keras import Sequential
-from keras.layers import Embedding, LSTM, Dense, Dropout
+from keras.layers import Embedding, LSTM, Dense, Dropout, GlobalMaxPool1D
 from keras.preprocessing.sequence import pad_sequences
 from keras.optimizers import Adam
 from keras.callbacks import EarlyStopping, ModelCheckpoint
@@ -22,8 +22,7 @@ INIT_LR = .005
 NUM_EPOCHS = 10
 
 # TODO replace this later one
-data = utils.load_data()
-data = utils.format_data(data)
+data = utils.get_data()
 
 genres, summaries = data["genres"], data["summary"]
 
@@ -31,7 +30,7 @@ genres, summaries = data["genres"], data["summary"]
 tokenizer = Tokenizer(num_words=VOCAB_SIZE, oov_token=OOV_TOKEN)
 tokenizer.fit_on_texts(summaries)
 word_index = tokenizer.word_index
-print(word_index)
+
 #
 # import pdb
 # pdb.set_trace()
@@ -41,11 +40,13 @@ text_sequences = tokenizer.texts_to_sequences(summaries)
 x = pad_sequences(text_sequences, maxlen=MAX_TEXT_LEN)
 
 # Multi-Label Binarize the Gentres
-binarizer = MultiLabelBinarizer()
-binarizer.fit(genres)
-y = binarizer.classes_
+multilabel_binarizer = MultiLabelBinarizer()
+y = multilabel_binarizer.fit_transform(genres)
 
-x_train, x_test, y_train, y_test = utils.get_train_and_test_data()
+import pdb
+pdb.set_trace()
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=.2, random_state=RANDOM_SEED)
 
 
 # Actual LSTM Architecture
@@ -67,7 +68,7 @@ def create_baseline():
     """
 
     model = Sequential()
-    model.add(Dense(64, input_dim=MAX_TEXT_LEN, activation='relu'))
+    model.add(Embedding(VOCAB_SIZE, EMBEDDING_DIM, input_length=MAX_TEXT_LEN))
     model.add(Dropout(rate=.2))
     model.add(Dense(NUM_GENRES, activation='sigmoid'))
 
@@ -80,7 +81,7 @@ def create_baseline():
 def create_lstm():
     # TODO
     model = Sequential()
-    model.add(Embedding(VOCAB_SIZE, 20, input_dim=MAX_TEXT_LEN))
+    model.add(Embedding(VOCAB_SIZE, 20, input_length=MAX_TEXT_LEN))
     model.add(Dropout(rate=.15))
     model.add(LSTM(100, dropout=.2, recurrent_dropout=.2))
     model.add(Dense(NUM_GENRES, activation='sigmoid'))
@@ -101,9 +102,9 @@ callbacks = [
     ModelCheckpoint(filepath='baseline-nn.h5', save_best_only=True)
 ]
 
-history = baseline_model.fit(x_train, y_train,
+history = baseline_model.fit(x_train, y_train[None, :, :],
                              epochs=NUM_EPOCHS,
-                             batch_size=32,
+                             batch_size=1,
                              validation_split=.1,
                              callbacks=callbacks
 

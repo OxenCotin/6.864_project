@@ -82,12 +82,44 @@ def replace_genre(df, col, key, val):
     return df
 
 
-def get_train_and_test_data():
+def get_data():
     data = load_data()
     data = format_data(data)
 
     train, test = sklearn.model_selection.train_test_split(data, test_size=.2)
 
+
+    counts = data['genres'].explode().value_counts().to_dict()
+
+    remove_genres = {key:val for key, val in counts.items() if val < 87}
+    data = filter_genres(data, remove_genres.keys())
+
+
+    replacement_dict = {'Science fiction': ['Speculative fiction', 'Hard science fiction'],
+                    'Mystery': ['Detective fiction', 'Crime fiction'],
+                    'Historical novel': ['Historical fiction', 'History']}
+
+
+    for k in replacement_dict:
+        for v in replacement_dict[k]:
+            replace_genre(data, 'genres', v, k)
+
+    # mlb = MultiLabelBinarizer()
+    # data = data.join(pd.DataFrame(mlb.fit_transform(data.pop('genres')),
+    #                           columns=mlb.classes_,
+    #                           index=data.index))
+
+    data.reset_index(drop=True, inplace=True)
+    # print(mlb.classes_)
+    # data['genres'] = data[data.columns[1:]].values.tolist()
+
+    return data
+
+def get_train_and_test_data():
+    data = load_data()
+    data = format_data(data)
+
+    train, test = sklearn.model_selection.train_test_split(data, test_size=.2)
 
     counts = data['genres'].explode().value_counts().to_dict()
 
@@ -110,15 +142,17 @@ def get_train_and_test_data():
                               index=data.index))
 
 
-    x_train, y_train, x_test, y_test = sklearn.model_selection.train_test_split(data["summary"], data["genres"], test_size=.2)
+    data['genres'] = data[data.columns[1:]].values.tolist()
 
+    x_train, y_train, x_test, y_test = sklearn.model_selection.train_test_split(data["summary"], data["genres"], test_size=.2)
     return x_train, y_train, x_test, y_test
 
 
 data = load_data()
 data = format_data(data)
 
+x_train, y_train, x_test, y_test = get_train_and_test_data()
+
+
 # data_n = data.to_numpy()
 # unique_elts, count_elts = np.unique(data_n[:, 0], return_counts=True)
-
-
