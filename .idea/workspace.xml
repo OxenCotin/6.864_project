@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9df9d12c-daa8-411a-9295-26cdef7e0c40" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/booksummaries/nlp_helpers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/booksummaries/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/booksummaries/vanilla_nn.py" beforeDir="false" afterPath="$PROJECT_DIR$/vanilla_nn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nlp_helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/nlp_helpers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vanilla_nn.py" beforeDir="false" afterPath="$PROJECT_DIR$/vanilla_nn.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,8 +23,8 @@
           <entry key="project.closed" value="3" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.3" value="3" />
-          <entry key="project.open.time.4" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.open.time.4" value="2" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -46,14 +46,14 @@
         <counts>
           <entry key="book_similarity" value="170" />
           <entry key="dummy" value="5" />
-          <entry key="py" value="3614" />
+          <entry key="py" value="4087" />
           <entry key="utils" value="367" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="5" />
-          <entry key="Python" value="4151" />
+          <entry key="Python" value="4624" />
         </counts>
       </usages-collector>
     </session>
@@ -68,25 +68,25 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
+            <state relative-caret-position="332">
+              <caret line="75" selection-start-line="75" selection-end-line="75" />
               <folding>
-                <marker date="1588412290586" expanded="true" signature="409:796" ph="..." />
-                <marker date="1588412290586" expanded="true" signature="1066:1231" ph="..." />
-                <marker date="1588412290586" expanded="true" signature="1261:1568" ph="..." />
+                <element signature="e#0#18#0" expanded="true" />
+                <marker date="1588449508885" expanded="true" signature="395:782" ph="..." />
+                <marker date="1588449508885" expanded="true" signature="1052:1217" ph="..." />
+                <marker date="1588449508885" expanded="true" signature="1247:1554" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/booksummaries/nlp_helpers.py">
+        <entry file="file://$PROJECT_DIR$/nlp_helpers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+            <state relative-caret-position="105">
+              <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
-                <marker date="1588412290578" expanded="true" signature="53:58" ph="..." />
               </folding>
             </state>
           </provider>
@@ -95,11 +95,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vanilla_nn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
+            <state>
+              <caret column="13" selection-start-column="13" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -122,8 +119,10 @@
         <option value="$PROJECT_DIR$/booksummaries/book_similarity.py" />
         <option value="$PROJECT_DIR$/booksummaries/vanilla_nn.py" />
         <option value="$PROJECT_DIR$/booksummaries/utils.py" />
-        <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/booksummaries/nlp_helpers.py" />
+        <option value="$PROJECT_DIR$/utils.py" />
+        <option value="$PROJECT_DIR$/vanilla_nn.py" />
+        <option value="$PROJECT_DIR$/nlp_helpers.py" />
       </list>
     </option>
   </component>
@@ -144,6 +143,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -156,11 +156,14 @@
               <item name="Project" type="462c0819:PsiDirectoryNode" />
               <item name="booksummaries" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -236,6 +239,9 @@
       <module name="Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/booksummaries" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -282,7 +288,7 @@
     <frame x="0" y="0" width="1920" height="1024" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26040554" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26307365" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -297,7 +303,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info anchor="bottom" id="Python Console" order="12" visible="true" weight="0.33032694" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="12" visible="true" weight="0.33032694" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -330,33 +336,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vanilla_nn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="332">
+          <caret line="75" selection-start-line="75" selection-end-line="75" />
           <folding>
-            <marker date="1588412290586" expanded="true" signature="409:796" ph="..." />
-            <marker date="1588412290586" expanded="true" signature="1066:1231" ph="..." />
-            <marker date="1588412290586" expanded="true" signature="1261:1568" ph="..." />
+            <element signature="e#0#18#0" expanded="true" />
+            <marker date="1588449508885" expanded="true" signature="395:782" ph="..." />
+            <marker date="1588449508885" expanded="true" signature="1052:1217" ph="..." />
+            <marker date="1588449508885" expanded="true" signature="1247:1554" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/booksummaries/nlp_helpers.py">
+    <entry file="file://$PROJECT_DIR$/nlp_helpers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+        <state relative-caret-position="105">
+          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
-            <marker date="1588412290578" expanded="true" signature="53:58" ph="..." />
           </folding>
         </state>
       </provider>
