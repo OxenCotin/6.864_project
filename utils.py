@@ -109,7 +109,8 @@ def get_train_and_test_data():
                               columns=mlb.classes_,
                               index=data.index))
 
-    x_train, y_train, x_test, y_test = train[:, 1], train[:, 0], test[:, 1], test[:0]
+
+    x_train, y_train, x_test, y_test = sklearn.model_selection.train_test_split(data["summary"], data["genres"], test_size=.2)
 
     return x_train, y_train, x_test, y_test
 
