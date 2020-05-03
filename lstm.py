@@ -16,7 +16,7 @@ VOCAB_SIZE = 5000
 EMBEDDING_DIM = 64
 MAX_TEXT_LEN = 250
 OOV_TOKEN = "<OOV>"
-NUM_GENRES = 20
+NUM_GENRES = 19
 
 INIT_LR = .005
 NUM_EPOCHS = 10
@@ -70,6 +70,7 @@ def create_baseline():
     model = Sequential()
     model.add(Embedding(VOCAB_SIZE, EMBEDDING_DIM, input_length=MAX_TEXT_LEN))
     model.add(Dropout(rate=.2))
+    model.add(GlobalMaxPool1D())
     model.add(Dense(NUM_GENRES, activation='sigmoid'))
 
     optimizer = Adam(lr=INIT_LR, decay=INIT_LR / NUM_EPOCHS)
@@ -102,7 +103,7 @@ callbacks = [
     ModelCheckpoint(filepath='baseline-nn.h5', save_best_only=True)
 ]
 
-history = baseline_model.fit(x_train, y_train[None, :, :],
+history = baseline_model.fit(x_train, y_train,
                              epochs=NUM_EPOCHS,
                              batch_size=1,
                              validation_split=.1,
