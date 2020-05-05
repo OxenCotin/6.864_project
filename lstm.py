@@ -17,7 +17,7 @@ VOCAB_SIZE = 5000
 EMBEDDING_DIM = 64
 MAX_TEXT_LEN = 250
 OOV_TOKEN = "<OOV>"
-NUM_GENRES = 19
+NUM_GENRES = 10
 
 INIT_LR = .075
 NUM_EPOCHS = 10
@@ -44,6 +44,7 @@ x = pad_sequences(text_sequences, maxlen=MAX_TEXT_LEN)
 multilabel_binarizer = MultiLabelBinarizer()
 y = multilabel_binarizer.fit_transform(genres)
 
+print(y)
 import pdb
 pdb.set_trace()
 
@@ -95,23 +96,23 @@ def create_lstm():
 
     return model
 
-# print("Creating Model")
-#
-# baseline_model = create_baseline()
-# print("Model created")
-#
-# callbacks = [
-#     EarlyStopping(patience=4),
-#     ModelCheckpoint(filepath='baseline-nn.h5', save_best_only=True)
-# ]
-#
-# history = baseline_model.fit(x_train, y_train,
-#                              epochs=NUM_EPOCHS,
-#                              batch_size=1,
-#                              validation_split=.1,
-#                              callbacks=callbacks
-#
-# )
+print("Creating Model")
+
+baseline_model = create_baseline()
+print("Model created")
+
+callbacks = [
+    EarlyStopping(patience=4),
+    ModelCheckpoint(filepath='baseline-nn.h5', save_best_only=True)
+]
+
+history = baseline_model.fit(x_train, y_train,
+                             epochs=NUM_EPOCHS,
+                             batch_size=1,
+                             validation_split=.1,
+                             callbacks=callbacks
+
+)
 
 # lstm = create_lstm()
 # print("Model created")
@@ -131,8 +132,9 @@ def create_lstm():
 #                              callbacks=callbacks
 #
 # )
-
+'''
 simple_model = keras.models.load_model('lstm-nn.h5')
 metrics = simple_model.evaluate(x_test, y_test)
 print("{}: {}".format(simple_model.metrics_names[0], metrics[0]))
 print("{}: {}".format(simple_model.metrics_names[1], metrics[1]))
+'''
