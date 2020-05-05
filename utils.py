@@ -92,17 +92,31 @@ def get_data():
     counts = data['genres'].explode().value_counts().to_dict()
 
     remove_genres = {key:val for key, val in counts.items() if val < 600}
-    data = filter_genres(data, remove_genres.keys())
+    data = filter_genres(data, remove_genres.keys()) # remove genres with too few titles
 
 
-    replacement_dict = {'Science fiction': ['Speculative fiction', 'Hard science fiction'],
-                    'Mystery': ['Detective fiction', 'Crime fiction'],
-                    'Historical novel': ['Historical fiction', 'History']}
+    replacement_dict = {'Science fiction': ['Speculative fiction','Science Fiction'],
+                'Fantasy': ['Alternative history','Dystopia','Adventure novel','Fantasy'],
+                'Mystery': ['Crime Fiction','Detective fiction','Mystery'],
+                'Suspense': ['Horror','Thriller','Suspense'],
+                'Historical fiction': ['Historical fiction','Historical novel'],
+                'Non fiction': ['Autobiography','Non fiction'],
+                'Romance novel': ['Romance novel'],
+                'Children\'s literature': ['Children\'s literature'],
+                'Young adult literature': ['Young adult literature']
+                }
 
 
     for k in replacement_dict:
         for v in replacement_dict[k]:
-            replace_genre(data, 'genres', v, k)
+            data = replace_genre(data, 'genres', v, k)
+
+    data = replace_genre(data, 'genres', 'Fiction', 'NaN')
+    data = replace_genre(data, 'genres', 'Novel', 'NaN')
+
+    data = data[data.genres != 'NaN']
+
+print(data.head(50))
 
     # mlb = MultiLabelBinarizer()
     # data = data.join(pd.DataFrame(mlb.fit_transform(data.pop('genres')),
@@ -123,29 +137,36 @@ def get_train_and_test_data():
 
     counts = data['genres'].explode().value_counts().to_dict()
 
-    remove_genres = {key:val for key, val in counts.items() if val < 87}
-    data = filter_genres(data, remove_genres.keys())
+    remove_genres = {key:val for key, val in counts.items() if val < 600}
+    data = filter_genres(data, remove_genres.keys()) # remove genres with too few titles
 
-
-    replacement_dict = {'Science fiction': ['Speculative fiction', 'Hard science fiction'],
-                    'Mystery': ['Detective fiction', 'Crime fiction'],
-                    'Historical novel': ['Historical fiction', 'History']}
+    replacement_dict = {'Science fiction': ['Speculative fiction','Science Fiction'],
+                    'Fantasy': ['Alternative history','Dystopia','Adventure novel','Fantasy'],
+                    'Mystery': ['Crime Fiction','Detective fiction','Mystery'],
+                    'Suspense': ['Horror','Thriller','Suspense'],
+                    'Historical fiction': ['Historical fiction','Historical novel'],
+                    'Non fiction': ['Autobiography','Non fiction'],
+                    'Romance novel': ['Romance novel'],
+                    'Children\'s literature': ['Children\'s literature'],
+                    'Young adult literature': ['Young adult literature']
+                    }
 
 
     for k in replacement_dict:
         for v in replacement_dict[k]:
-            replace_genre(data, 'genres', v, k)
-    
-    mlb = MultiLabelBinarizer()
-    data = data.join(pd.DataFrame(mlb.fit_transform(data.pop('genres')),
-                              columns=mlb.classes_,
-                              index=data.index))
+            data = replace_genre(data, 'genres', v, k)
 
+    data = replace_genre(data, 'genres', 'Fiction', 'NaN')
+    data = replace_genre(data, 'genres', 'Novel', 'NaN')
 
+data = data[data.genres != 'NaN']
+
+print(data.head(50))
     data['genres'] = data[data.columns[1:]].values.tolist()
 
     x_train, y_train, x_test, y_test = sklearn.model_selection.train_test_split(data["summary"], data["genres"], test_size=.2)
     return x_train, y_train, x_test, y_test
+
 
 
 # data_n = data.to_numpy()
