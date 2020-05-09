@@ -7,6 +7,8 @@ import math
 import sys
 from sklearn.preprocessing import MultiLabelBinarizer
 import matplotlib.pyplot as plt
+from sklearn.utils import resample
+import ast
 
 BOOK_SUMMARY_FILE = "clean_summaries.csv"
 
@@ -80,13 +82,31 @@ def replace_genres_d(df, col, dict):
     return df
 
 
+def undersampling(data):
+
+    minCount = data.genres.explode().value_counts().tolist()[-1]
+
+    labels = data.genres.explode().value_counts().keys().tolist()
+
+    new_df = pd.DataFrame(columns = ['genres','summary'])
+    for label in labels: 
+
+        temp = data[data.genres.apply(lambda x: label in x)]
+        resampled = resample(temp, replace=False, n_samples = minCount)
+        print(resampled)
+        new_df = new_df.append(resampled)
+
+    return new_df
+
+
+
 def get_data():
     data = load_data()
     data = format_data(data)
 
     counts = data['genres'].explode().value_counts().to_dict()
 
-    remove_genres = {key:val for key, val in counts.items() if val < 124}
+    remove_genres = {key:val for key, val in counts.items() if val < 145}
     data = filter_genres(data, remove_genres.keys()) # remove genres with too few titles
 
 
@@ -96,15 +116,14 @@ def get_data():
                 'Suspense': ['Horror','Thriller','Suspense', 'Spy fiction'],
                 'Historical fiction': ['Historical fiction','Historical novel'],
                 'Children\'s literature': ['Children\'s literature'],
-                'Young adult literature': ['Young adult literature'],
-                'Comedy': ['Comedy']
+                'Young adult literature': ['Young adult literature']
                 }
 
     replacement_dict = {v: k for k, values in replacement_dict.items() for v in values}
 
     data = replace_genres_d(data, 'genres', replacement_dict)
 
-    data = filter_genres(data, ['Fiction', 'Novel', 'Non-fiction', 'Autobiography', 'Romance novel'])
+    data = filter_genres(data, ['Fiction', 'Novel', 'Non-fiction', 'Autobiography', 'Romance novel','Comedy'])
 
     data = data[data['genres'].astype(bool)]
 
@@ -140,8 +159,15 @@ labels.append('Other')
 
 
 data = get_data()
-counts = data.genres.explode().value_counts().tolist()
-labels = data.genres.explode().value_counts().keys().tolist()
+
+
+und = undersampling(data)
+
+print(und)
+
+counts = und.genres.explode().value_counts().tolist()
+labels = und.genres.explode().value_counts().keys().tolist()
+
 
 fig1, ax1 = plt.subplots()
 ax1.pie(counts, labels=labels, autopct='%1.1f%%',
@@ -149,3 +175,4 @@ ax1.pie(counts, labels=labels, autopct='%1.1f%%',
 ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 plt.tight_layout()
 plt.show()
+
