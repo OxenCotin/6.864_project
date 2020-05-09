@@ -6,6 +6,7 @@ import torch
 import math 
 import sys
 from sklearn.preprocessing import MultiLabelBinarizer
+import matplotlib.pyplot as plt
 
 BOOK_SUMMARY_FILE = "clean_summaries.csv"
 
@@ -119,14 +120,7 @@ def get_data():
 
     replacement_dict = {v: k for k, values in replacement_dict.items() for v in values}
 
-
-    print(data)
-    import pdb
-    pdb.set_trace()
     data = replace_genres_d(data, 'genres', replacement_dict)
-    # for k in replacement_dict:
-    #     for v in replacement_dict[k]:
-    #         data = replace_genre(data, 'genres', v, k)
 
     data = filter_genres(data, ['Fiction', 'Novel'])
 
@@ -183,3 +177,27 @@ def get_train_and_test_data():
 
 # data_n = data.to_numpy()
 # unique_elts, count_elts = np.unique(data_n[:, 0], return_counts=True)
+
+'''
+data = load_data()
+data = format_data(data)
+counts = data.genres.explode().value_counts().tolist()
+sum_counts = sum(counts)
+leftover = sum_counts - sum(counts[0:19])
+counts = counts[0:19]
+counts.append(leftover)
+labels = data.genres.explode().value_counts().keys().tolist()[0:19]
+labels.append('Other')
+'''
+
+
+data = get_data()
+counts = data.genres.explode().value_counts().tolist()
+labels = data.genres.explode().value_counts().keys().tolist()
+
+fig1, ax1 = plt.subplots()
+ax1.pie(counts, labels=labels, autopct='%1.1f%%',
+        shadow=True, startangle=120, labeldistance = 1.05)
+ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+plt.tight_layout()
+plt.show()
