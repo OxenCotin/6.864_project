@@ -127,6 +127,8 @@ def get_data():
 
     data = data[data['genres'].astype(bool)]
 
+    data = undersampling(data)
+
 
     # mlb = MultiLabelBinarizer()
     # data = data.join(pd.DataFrame(mlb.fit_transform(data.pop('genres')),
